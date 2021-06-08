@@ -38,6 +38,41 @@ class View {
     return $html;
   }
 
+  public static function renderEditorMenu($user = null) {
+    $html = '';
+    $edit = false;
+    $id = null;
+
+    if (isset($user)) {
+      $edit = true;
+    };
+
+    if (isset($user['user_id'])) {
+      $id = $user['user_id'];
+    };
+
+    $html .=
+    '<div class="' .($edit ? "edit" : "add"). '">
+      <form action="'. Request::MakeURL("users", ($edit ? "update" : "add"), $id) .'" method="POST">'.
+        ($edit
+          ? ''
+          : '<label for="newuserName">Felhasználó név</label>').
+        '<input
+          type="text"
+          name="name"
+          placeholder="' .($edit ? $user['name'] : "név"). '"
+          id="newuserName"></input>'
+        .Request::AddSubmitId().
+        '<button
+          type="submit">'
+            .($edit ? "Frissítés" : "Hozzáadás").
+        '</button>'
+        .($edit ? '<a href="'. Request::MakeURL("users"). '">Mégsem</a>' : '').
+      '</form>
+    </div>';
+    return $html;
+  }
+
   public static function home() {
     return '<div>Home</div>';
   }
