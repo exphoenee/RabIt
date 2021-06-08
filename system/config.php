@@ -3,7 +3,7 @@
   class Config {
 
     /* main infos */
-    public static $base = "https://localhost/";
+    public static $base = "http://localhost:3000/";
     public static $title = "RabIT teszt feladat";
 
     /* Change Before Deploy! */
