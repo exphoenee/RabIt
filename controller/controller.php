@@ -30,6 +30,10 @@ class Controller {
     echo $html;
   }
 
+  public static function getPrimaryKey() {
+    return substr(Request::GetPage(), 0, -1)."_id";
+  }
+
   public static function create($table, $data) {
     $sql = Sql::Insert($table)->setFields($data);
     Database::Exec($sql);
