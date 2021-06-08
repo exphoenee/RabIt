@@ -5,7 +5,7 @@ class UserView {
     $html = '';
     $html .='<div><h1>Falhasználók</h1>';
 
-    $html .= View::renderEditorMenu();
+    $html .= View::renderEditorMenu($users[0], true);
     $html .= self::renderUserTable($users);
 
     $html .='</div>';

@@ -6,7 +6,7 @@ class AdvertView {
     $html = '';
 
     $html .= '<div><h1>Hirdetések</h1>';
-    $html .= View::renderEditorMenu();
+    $html .= View::renderEditorMenu($adverts[0], true);
     $html .= self::renderAdvertTable($adverts);
 
     $html .='</div>';

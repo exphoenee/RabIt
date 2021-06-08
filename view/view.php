@@ -38,36 +38,44 @@ class View {
     return $html;
   }
 
-  public static function renderEditorMenu($user = null) {
+  public static function renderEditorMenu($data, $edit = false) {
     $html = '';
-    $edit = false;
+
+    $idKey = Controller::getPrimaryKey();
+
     $id = null;
-
-    if (isset($user)) {
-      $edit = true;
+    if (isset($data[$idKey])) {
+      $id = $data[$idKey];
     };
 
-    if (isset($user['user_id'])) {
-      $id = $user['user_id'];
-    };
+    unset($data[$idKey]);
 
     $html .=
-    '<div class="' .($edit ? "edit" : "add"). '">
-      <form action="'. Request::MakeURL("users", ($edit ? "update" : "add"), $id) .'" method="POST">'.
-        ($edit
-          ? ''
-          : '<label for="newuserName">Felhasználó név</label>').
-        '<input
-          type="text"
-          name="name"
-          placeholder="' .($edit ? $user['name'] : "név"). '"
-          id="newuserName"></input>'
-        .Request::AddSubmitId().
+    '<div class="' .($edit ? "add" : "edit"). '">
+      <form action="'. Request::MakeURL(Request::GetPage(), ($edit ? "add" : "update"), ($edit ? null : $id)) .'" method="POST">';
+
+    $fieldName = Mocks::headerText();
+    foreach ($data as $key => $field) {
+      $html .=
+        '<div class="inputfiled">'.
+          ($edit
+          ? '<label for="newuserName">'. $fieldName[$key] .'</label>'
+          : '').
+          '<input
+            type="text"
+            name="'. $key .'"
+            placeholder="' .($edit ? "név" : $field). '"
+            id="'. $key .'"></input>'
+          .Request::AddSubmitId().
+          '</div>';
+    }
+
+    $html .=
         '<button
           type="submit">'
-            .($edit ? "Frissítés" : "Hozzáadás").
+            .($edit ? "Hozzáadás" : "Frissítés" ).
         '</button>'
-        .($edit ? '<a href="'. Request::MakeURL("users"). '">Mégsem</a>' : '').
+        .($edit ? '' : '<a href="'. Request::MakeURL(Request::GetPage()). '">Mégsem</a>').
       '</form>
     </div>';
     return $html;
