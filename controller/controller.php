@@ -2,6 +2,15 @@
 
 class Controller {
 
+  public static function getPage() {
+    $page = Request::Get("page", "home");
+
+    $html = '';
+    $html .= PageView::header();
+    $html .= PageView::body();
+    echo $html;
+  }
+
   public static function create($table, $data) {
     $sql = Sql::Insert($table)->setFields($data);
     return Database::Exec($sql, $data);
