@@ -1,7 +1,4 @@
 
 RewriteEngine on
-RewriteCond %{HTTPS} off
-RewriteCond %{HTTP:X-Forwarded-SSL} !on
-RewriteCond %{HTTP_HOST} ^localhost.\$ [OR]
-RewriteRule ^(.*)$ "https\:\/localhost\/$1" [R=301,L]
+RewriteCond ^(.*)$ index.php
 
