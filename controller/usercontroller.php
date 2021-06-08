@@ -2,6 +2,26 @@
 
 class UserController {
 
+  public static function hanldeUsers() {
+    $data = Request::Post();
+    $action = Request::GetAction();
+    $id = Request::GetParam();
+
+    switch ($action) {
+      case "add":
+        self::create($data);
+        break;
+      case "delete":
+        self::delete($id);
+        break;
+      case "update":
+        self::update($id, $data);
+        break;
+      default:
+        break;
+    }
+  }
+
   public static function create($data) {
     return Controller::create("user", $data);
   }
