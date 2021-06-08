@@ -15,9 +15,19 @@
       ],
       "advert" =>
       [
-        "text" => "Reklámok",
+        "text" => "Hirdetések",
         "link" => "adverts",
       ],
+    ];
+
+    public static $idTags = [
+      "user_id" => "User Azonosító",
+      "advert_id" => "Hirdetés azonosító",
+    ];
+
+    public static $filedNames = [
+      "title" => "Hirdetés címe",
+      "name" => "Felhasználó neve"
     ];
 
   }
