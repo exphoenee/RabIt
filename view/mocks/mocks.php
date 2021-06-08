@@ -30,6 +30,10 @@
       "name" => "Felhasználó neve"
     ];
 
+    public static function headerText() {
+      return array_merge(self::$idTags, self::$filedNames);
+    }
+
   }
 
 ?>
