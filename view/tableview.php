@@ -7,16 +7,15 @@
     public function __construct($records, $editable = false) {
       $idKey = null;
 
-      $headerText = array_merge(Mocks::$idTags, Mocks::$filedNames);
+      $headerText = Mocks::headerText();
       $editor = ["edit" => "Szerkesztés", "delete" => "Törlés"];
 
       $this->header = [];
       foreach (array_keys($records[0]) as $key) {
         $this->header[$key] = $headerText[$key];
-        if (strpos($key, "_id") > -1) {
-          $idKey = $key;
-        }
       }
+
+      $idKey = Controller::getPrimaryKey();
 
       if (!$idKey) {
         $editable = false;
