@@ -42,8 +42,8 @@
         $key = "`".$key."`";
       }
 
-      $this->keys = "(".implode(", ", $keys).")";
-      $this->values = "(".implode(", ", $fields).")";
+      $this->keys = implode(", ", $keys);
+      $this->values = implode(", ", $fields);
 
       return $this;
     }
@@ -105,14 +105,21 @@
       if ($this->type == "INSERT") {
         $sql .= "INTO ";
         $sql .= "`".(\Config::$dbPrefix . $this->table)."` ";
-        $sql .= $this->keys;
+        $sql .= "(".$this->keys.")";
         $sql .= " VALUES ";
-        $sql .= $this->values;
+        $sql .= "(".$this->values.")";
       } else
+
+      /*
+      UPDATE `rabit__user` SET `name` = '123' WHERE `rabit__user`.`user_id` = 46;
+      UPDATE `rabit__user` (`name`) SET ('Viktor Bozzay') WHERE `user_id` = 46
+      */
+
       if ($this->type == "UPDATE") {
         $sql .= "`".(\Config::$dbPrefix . $this->table)."` ";
-        $sql .= $this->keys;
         $sql .= " SET ";
+        $sql .= $this->keys;
+        $sql .= " = ";
         $sql .= $this->values;
 
         if ($this->where) {
@@ -129,8 +136,6 @@
           $sql .= $this->where;
         }
       }
-
-      var_dump($sql);
 
       return $sql;
     }
