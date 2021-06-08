@@ -44,17 +44,17 @@ class Request {
 
 			if(isset($_SESSION['lastSubmitId']) && $_SESSION['lastSubmitId'] == $id)
 			{
-				$_POST = [];
+        $_POST = [];
 			}
 			else
 			{
+        unset($_POST['submitId']);
 				$_SESSION['lastSubmitId'] = $id;
 			}
 		}
 	}
 
-	public static function MakeURL($page, $action = null, $param = null)
-	{
+	public static function MakeURL($page, $action = null, $param = null) {
 		$url = Config::$base .$page;
 		if($action){ $url .= ("/". $action); }
 		if($param){ $url .= ("/". $param); }
@@ -64,12 +64,7 @@ class Request {
 	public static function Path($index)
 	{
 		if (self::$path === null) {
-			$script = $_SERVER['PHP_SELF'];
 			$request = $_SERVER['REQUEST_URI'];
-
-			$script = str_replace("index.php", "", $script);
-			$request = str_replace($script, "", $request);
-
 			self::$path = explode("/", $request);
 		}
 
@@ -81,15 +76,15 @@ class Request {
 	}
 	public static function GetPage()
 	{
-		return self::Path(0);
+		return self::Path(1);
 	}
 	public static function GetAction()
 	{
-		return self::Path(1);
+		return self::Path(2);
 	}
 	public static function GetParam()
 	{
-		return self::Path(2);
+		return self::Path(3);
 	}
 
 	private static $path = null;
