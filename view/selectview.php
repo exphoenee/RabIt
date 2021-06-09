@@ -5,12 +5,19 @@ class SelectView {
   private $primaryKey;
   private $err;
   private $selected;
+  private $id;
 
   public function __construct($values, $column, $primaryKey) {
     $this->values = $values;
     $this->column = $column;
     $this->primaryKey = $primaryKey;
     $this->err = isset($this->values[0][$this->primaryKey]);
+    $this->id = "add";
+  }
+
+  public function setId($id) {
+    $this->id = $id;
+    return $this;
   }
 
   public function setSelected($selected) {
@@ -18,7 +25,7 @@ class SelectView {
     return $this;
   }
 
-    public function getForeignKey() {
+  public function getForeignKey() {
     return $this->column;
   }
 
@@ -26,7 +33,17 @@ class SelectView {
       $html = '';
 
       if ($this->err) {
-        $html .= '<select name="'. $this->column .'">';
+        $html .=
+        '<div class="inputfiled">';
+        $html .=
+          '<label
+            for="'. $this->column."-".$this->id.'">'
+              . Mocks::$filedNames[$this->column].
+          ' </label>';
+        $html .=
+          '<select
+            id="'. $this->column."-".$this->id.'"
+            name="'. $this->column .'">';
         foreach ($this->values as $id => $record) {
           $html .=
             '<option
@@ -38,6 +55,7 @@ class SelectView {
               '</option>';
         }
         $html .= '</select>';
+        $html .= '</div>';
       }
       return $html;
     }
