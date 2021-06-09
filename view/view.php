@@ -73,7 +73,9 @@ class View {
             '<input
               type="text"
               name="'. $key .'"
-              id="'. $key .'-'. $id .'" value="'. $field .'"></input>
+              id="'. $key .'-'. $id .'" '
+              .($edit ? '' : 'value="'. $field .'"').
+              '></input>
           </div>';
       }
     }
