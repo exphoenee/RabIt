@@ -5,7 +5,7 @@
     private $table;
     private $fields;
     private $values;
-    private $kesy;
+    private $keys;
     private $where;
     private $count;
 
@@ -42,8 +42,8 @@
         $key = "`".$key."`";
       }
 
-      $this->keys = implode(", ", $keys);
-      $this->values = implode(", ", $fields);
+      $this->keys = $keys;
+      $this->values = $fields;
 
       return $this;
     }
@@ -105,22 +105,19 @@
       if ($this->type == "INSERT") {
         $sql .= "INTO ";
         $sql .= "`".(\Config::$dbPrefix . $this->table)."` ";
-        $sql .= "(".$this->keys.")";
+        $sql .= "(".implode(", ", $this->keys).")";
         $sql .= " VALUES ";
-        $sql .= "(".$this->values.")";
+        $sql .= "(".implode(", ", $this->values).")";
       } else
-
-      /*
-      UPDATE `rabit__user` SET `name` = '123' WHERE `rabit__user`.`user_id` = 46;
-      UPDATE `rabit__user` (`name`) SET ('Viktor Bozzay') WHERE `user_id` = 46
-      */
-
       if ($this->type == "UPDATE") {
         $sql .= "`".(\Config::$dbPrefix . $this->table)."` ";
         $sql .= " SET ";
-        $sql .= $this->keys;
-        $sql .= " = ";
-        $sql .= $this->values;
+
+        $fields = [];
+        foreach (array_combine($this->keys, $this->values) as $key => $record) {
+          array_push($fields, $key." = ".$record);
+        }
+        $sql .= implode(", ", $fields);
 
         if ($this->where) {
           $sql .= " WHERE ";
