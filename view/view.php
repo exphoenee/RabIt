@@ -11,6 +11,7 @@ class View {
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>'.Config::$title.'</title>
+      <link rel="stylesheet" href="'.Config::$base.'/style/style.css"">
     </head>';
     return $html;
   }
@@ -19,7 +20,7 @@ class View {
     $html = '';
 
     $html .=
-      '<div>
+      '<header id="menu">
         <nav>
           <ul>';
 
@@ -34,17 +35,39 @@ class View {
     $html .=
           '</ul>
         </nav>
-      </div>';
+      </header>';
+    return $html;
+  }
+
+  public static function renderUserSelect($records, $column, $selected) {
+    $html = '';
+    $primaryKey = "user_id";
+
+    if (isset($records[0][$primaryKey])) {
+      $html .= '<select name="'. $column .'">';
+      foreach ($records as $id => $record) {
+        $html .=
+          '<option
+            name="'. $primaryKey .'"
+            value="'.$record[$primaryKey].'" '
+              .($selected == $record[$primaryKey] ? 'selected' : '').
+            '>'
+              .$record[$column].
+            '</option>';
+      }
+      $html .= '</select>';
+    }
     return $html;
   }
 
   public static function renderEditorMenu($data, $edit = false) {
     $html = '';
 
+    $page = Request::GetPage();
     $idKey = Controller::getPrimaryKey();
 
-    $id = null;
-    if (isset($data[$idKey])) {
+    $id = $edit ? "add" : null;
+    if (isset($data[$idKey]) && !$edit) {
       $id = $data[$idKey];
     };
 
@@ -52,20 +75,17 @@ class View {
 
     $html .=
     '<div class="' .($edit ? "add" : "edit"). '">
-      <form action="'. Request::MakeURL(Request::GetPage(), ($edit ? "add" : "update"), ($edit ? null : $id)) .'" method="POST">';
+      <form action="'. Request::MakeURL($page, ($edit ? "add" : "update"), ($edit ? null : $id)) .'" method="POST">';
 
     $fieldName = Mocks::headerText();
     foreach ($data as $key => $field) {
       $html .=
         '<div class="inputfiled">'.
-          ($edit
-          ? '<label for="newuserName">'. $fieldName[$key] .'</label>'
-          : '').
-          '<input
+          '<label for="'. $key .'-'. $id .'">'. $fieldName[$key] .'</label>
+          <input
             type="text"
             name="'. $key .'"
-            placeholder="' .($edit ? "név" : $field). '"
-            id="'. $key .'"></input>'
+            id="'. $key .'-'. $id .'"></input>'
           .Request::AddSubmitId().
           '</div>';
     }
@@ -75,7 +95,7 @@ class View {
           type="submit">'
             .($edit ? "Hozzáadás" : "Frissítés" ).
         '</button>'
-        .($edit ? '' : '<a href="'. Request::MakeURL(Request::GetPage()). '">Mégsem</a>').
+        .($edit ? '' : '<div class="link-btn"><a href="'. Request::MakeURL($page). '">Mégsem</a></div>').
       '</form>
     </div>';
     return $html;
@@ -92,11 +112,23 @@ class View {
     return $html;
   }
 
+  public static function openMain() {
+    $html = '';
+    $html .=
+      '<main>';
+    return $html;
+  }
+
+  public static function closeMain() {
+    $html = '';
+    $html .=
+      '</main>';
+    return $html;
+  }
   public static function closeBody() {
     $html = '';
     $html .=
-      '</body>
-    </html>';
+      '</body></html>';
     return $html;
   }
 }
