@@ -518,7 +518,6 @@ main select {
   border-radius: 5px;
   outline: 0;
   border: 0;
-  margin: 0px 10px 10px 10px;
 }
 main .add {
   color: white;
@@ -535,6 +534,7 @@ main .add form {
   justify-content: center;
 }
 main .add form .inputfiled {
+  margin: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -549,7 +549,7 @@ main .add form .link-btn:hover {
 }
 main .edit {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
 main .edit form {
   display: flex;
@@ -561,6 +561,7 @@ main .edit form .inputfiled {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-right: 10px;
 }
 
 .link-btn {
