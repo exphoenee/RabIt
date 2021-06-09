@@ -46,7 +46,7 @@ class Controller {
   public static function read($table, $id = null) {
     $sql = Sql::Select($table);
     if ($id  !== null) {
-      $sql->setWhere("`user_id` = ".$id);
+      $sql->setWhere("`".$table."_id` = ".$id);
     }
     Database::Exec($sql);
     return Database::Result();
@@ -55,14 +55,14 @@ class Controller {
   public static function update($table, $id, $data) {
     $sql = Sql::Update($table)
       ->setFields($data)
-      ->setWhere("`user_id` = ".$id);
+      ->setWhere("`".$table."_id` = ".$id);
     Database::Exec($sql);
     return Database::Result();
   }
 
   public static function delete($table, $id) {
     $sql = Sql::Delete($table)
-      ->setWhere("`user_id` = ".$id);
+      ->setWhere("`".$table."_id` = ".$id);
     Database::Exec($sql);
     return Database::Result();
   }
