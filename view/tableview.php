@@ -38,17 +38,17 @@
 
     private function genereateCells() {
       $records = $this->records;
-      $id = Request::GetPage();
+      $page = Request::GetPage();
 
       foreach ($records as &$record) {
-        $deleteUrl = Request::MakeURL($id, "delete", $record[$this->idKey]);
-        $updateUrl = Request::MakeURL($id, "edit", $record[$this->idKey]);
+        $deleteUrl = Request::MakeURL($page, "delete", $record[$this->idKey]);
+        $updateUrl = Request::MakeURL($page, "edit", $record[$this->idKey]);
 
         if ($this->editable) {
           if (Request::GetParam() != $record[$this->idKey]) {
             $record['Edit'] = View::createLinkButton($updateUrl, "Szerkesztés");
           } else {
-            $record['Edit'] = View::renderEditorMenu($record);
+            $record['Edit'] = View::renderEditorMenu($record, false, $this->select->setId($record[$this->idKey]));
           }
           $record['Delete'] = View::createLinkButton($deleteUrl, "Törlés", "delete");
         }
