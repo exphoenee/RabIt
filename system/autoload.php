@@ -13,6 +13,7 @@
 
   require_once 'view/view.php';
   require_once 'view/tableview.php';
+  require_once 'view/selectview.php';
   require_once 'view/homeview.php';
   require_once 'view/userview.php';
   require_once 'view/advertview.php';
