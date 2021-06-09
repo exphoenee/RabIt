@@ -179,3 +179,19 @@ main {
     background-color: red;
   }
 }
+
+.content {
+  margin-top: 3rem;
+  h2 {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+  }
+  ul {
+    list-style-type: circle;
+    list-style-position: inside;
+  }
+  p:last-of-type {
+    margin-top: 1.3rem;
+  }
+}

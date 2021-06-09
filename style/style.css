@@ -606,4 +606,20 @@ main .edit form .inputfiled {
 .delete:hover,
 .cancel:hover {
   background-color: red;
+}
+
+.content {
+  margin-top: 3rem;
+}
+.content h2 {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+}
+.content ul {
+  list-style-type: circle;
+  list-style-position: inside;
+}
+.content p:last-of-type {
+  margin-top: 1.3rem;
 }/*# sourceMappingURL=style.css.map */
