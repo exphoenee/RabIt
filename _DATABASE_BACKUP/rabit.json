@@ -1,0 +1,22 @@
+[
+{"type":"header","version":"5.0.4","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"rabit"},
+{"type":"table","name":"rabit__advert","database":"rabit","data":
+[
+{"advert_id":"4","title":"Senior Mechanical Engineer","user_id":"59"},
+{"advert_id":"6","title":"What is Lorem Ipsum?","user_id":"15"},
+{"advert_id":"7","title":"Dolor Sit Amet!","user_id":"73"},
+{"advert_id":"8","title":"Senior Mechanical Engineer","user_id":"62"},
+{"advert_id":"9","title":"Dolor Sit Amet?","user_id":"15"}
+]
+}
+,{"type":"table","name":"rabit__user","database":"rabit","data":
+[
+{"user_id":"62","name":"exphoenee@gmail.com"},
+{"user_id":"73","name":"Jancsika"},
+{"user_id":"15","name":"Pista"},
+{"user_id":"60","name":"Rozsomák"},
+{"user_id":"59","name":"Viktor Bozzay"}
+]
+}
+]
