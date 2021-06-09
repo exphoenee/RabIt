@@ -42,7 +42,6 @@ class SelectView {
       if ($this->err) {
         $html .=
         '<div class="inputfiled">';
-        var_dump(!$this->noLabel);
         if (!$this->noLabel) {
           $html .=
             '<label
