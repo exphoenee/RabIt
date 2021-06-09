@@ -6,16 +6,17 @@ class AdvertView {
     $html = '';
 
     $html .= '<div><h1>Hirdetések</h1>';
-    $html .= View::renderEditorMenu($adverts[0], true);
-    $html .= self::renderAdvertTable($adverts);
+    $select = new SelectView(UserController::read(), "name", "user_id");
+    $html .= View::renderEditorMenu($adverts[0], true, $select);
+    $html .= self::renderAdvertTable($adverts, $select);
 
     $html .='</div>';
     return $html;
   }
 
-  public static function renderAdvertTable($adverts) {
+  public static function renderAdvertTable($adverts, $select) {
     $table = new TableView($adverts, true);
-    return $table->render();
+    return $table->setSelector($select)->render();
   }
 }
 ?>

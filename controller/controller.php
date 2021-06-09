@@ -37,10 +37,6 @@ class Controller {
     return $html;
   }
 
-  public static function generateUserSelect($selected) {
-    return View::renderUserSelect(UserController::read(), "name", $selected);
-  }
-
   public static function create($table, $data) {
     $sql = Sql::Insert($table)->setFields($data);
     Database::Exec($sql);

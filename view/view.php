@@ -39,28 +39,7 @@ class View {
     return $html;
   }
 
-  public static function renderUserSelect($records, $column, $selected) {
-    $html = '';
-    $primaryKey = "user_id";
-
-    if (isset($records[0][$primaryKey])) {
-      $html .= '<select name="'. $column .'">';
-      foreach ($records as $id => $record) {
-        $html .=
-          '<option
-            name="'. $primaryKey .'"
-            value="'.$record[$primaryKey].'" '
-              .($selected == $record[$primaryKey] ? 'selected' : '').
-            '>'
-              .$record[$column].
-            '</option>';
-      }
-      $html .= '</select>';
-    }
-    return $html;
-  }
-
-  public static function renderEditorMenu($data, $edit = false) {
+  public static function renderEditorMenu($data, $edit = false, $select=null) {
     $html = '';
 
     $page = Request::GetPage();
@@ -79,23 +58,28 @@ class View {
 
     $fieldName = Mocks::headerText();
     foreach ($data as $key => $field) {
-      $html .=
-        '<div class="inputfiled">'.
-          '<label for="'. $key .'-'. $id .'">'. $fieldName[$key] .'</label>
-          <input
-            type="text"
-            name="'. $key .'"
-            id="'. $key .'-'. $id .'"></input>'
-          .Request::AddSubmitId().
-          '</div>';
+      if (($select) && ($key == $select->getForeignKey())) {
+        $html .= $select->setSelected($id)->render();
+      } else {
+        $html .=
+          '<div class="inputfiled">'.
+            '<label for="'. $key .'-'. $id .'">'. $fieldName[$key] .'</label>
+            <input
+              type="text"
+              name="'. $key .'"
+              id="'. $key .'-'. $id .'"></input>'
+            .Request::AddSubmitId().
+            '</div>';
+      }
     }
 
     $html .=
         '<button
+          class="link-btn '.($edit ? "add" : "update").'"
           type="submit">'
             .($edit ? "Hozzáadás" : "Frissítés" ).
         '</button>'
-        .($edit ? '' : '<div class="link-btn"><a href="'. Request::MakeURL($page). '">Mégsem</a></div>').
+        .($edit ? '' : '<div class="link-btn cancel"><a href="'. Request::MakeURL($page). '">Mégsem</a></div>').
       '</form>
     </div>';
     return $html;

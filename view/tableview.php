@@ -3,45 +3,54 @@
     private $header;
     private $data;
     private $editable;
+    private $select;
+    private $idKey;
 
     public function __construct($records, $editable = false) {
-      $idKey = null;
+      $this->records = $records;
+      $this->idKey = Controller::getPrimaryKey();;
+      $this->editable = $this->idKey ? $editable : false;
+      $this->select = false;
+      $this->data = [];
+      $this->header = [];
 
       $headerText = Mocks::headerText();
-      $editor = ["edit" => "Szerkesztés", "delete" => "Törlés"];
+      $editor = Mocks::$editor;
 
-      $this->header = [];
-      foreach (array_keys($records[0]) as $key) {
+      foreach (array_keys($this->records[0]) as $key) {
         $this->header[$key] = $headerText[$key];
       }
 
-      $idKey = Controller::getPrimaryKey();
-
-      if (!$idKey) {
-        $editable = false;
-      }
-
-      if ($editable) {
+      if ($this->editable) {
         $this->header = array_merge($this->header, $editor);
       }
-
-      foreach ($records as &$record) {
-        if ($editable) {
-          if (Request::GetParam() != $record[$idKey]) {
-            $record['Edit'] = '<div class="link-btn"><a href="'. Request::MakeURL(Request::GetPage(), "edit", $record[$idKey]) .'">Szerkesztés</a></div>';
-          } else {
-            $record['Edit'] = View::renderEditorMenu($record);
-          }
-
-          $record['Delete'] = '<div class="link-btn"><a href="'. Request::MakeURL(Request::GetPage(), "delete", $record[$idKey]) .'">Törlés</a></div>';
-        }
-      }
-
-      $this->data = $records;
     }
 
     public function setEditable($editable = true) {
       $this->editable = $editable;
+      return $this;
+    }
+
+    public function setSelector($select) {
+      $this->select = $select;
+      return $this;
+    }
+
+    private function genereateCells() {
+      foreach ($this->records as $record) {
+        var_dump($this->record);
+        if ($this->editable) {
+          if (Request::GetParam() != $record[$this->idKey]) {
+            $this->data['Edit'] = '<div class="link-btn"><a href="'. Request::MakeURL(Request::GetPage(), "edit", $record[$this->idKey]) .'">Szerkesztés</a></div>';
+          } else {
+            var_dump($this->select);
+            $$this->data['Edit'] = View::renderEditorMenu($record, false, $this->select);
+          }
+
+          $this->data['Delete'] = '<div class="link-btn delete"><a href="'. Request::MakeURL(Request::GetPage(), "delete", $record[$this->idKey]) .'">Törlés</a></div>';
+        }
+      }
+
       return $this;
     }
 
@@ -57,8 +66,11 @@
       }
       $thead .= '</tr>';
 
+      $this->genereateCells();
+
       foreach ($this->data as $row) {
         $tbody .= '<tr id="">';
+
 
         foreach ($row as $cell) {
           $tbody .= '<td>'. $cell .'</td>';
