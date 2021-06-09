@@ -63,11 +63,17 @@ class View {
       } else {
         $html .=
           '<div class="inputfiled">'.
-            '<label for="'. $key .'-'. $id .'">'. $fieldName[$key] .'</label>
-            <input
+            ($edit
+              ?
+                '<label
+                  for="'. $key .'-'. $id .'"
+                >'
+                  . $fieldName[$key] .
+                '</label>' : '').
+            '<input
               type="text"
               name="'. $key .'"
-              id="'. $key .'-'. $id .'"></input>
+              id="'. $key .'-'. $id .'" value="'. $field .'"></input>
           </div>';
       }
     }
