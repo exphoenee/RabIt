@@ -43,11 +43,10 @@ class SelectView {
         $html .=
           '<select
             id="'. $this->column."-".$this->id.'"
-            name="'. $this->column .'">';
+            name="'. $this->primaryKey .'">';
         foreach ($this->values as $id => $record) {
           $html .=
             '<option
-              name="'. $this->primaryKey .'"
               value="'.$record[$this->primaryKey].'" '
                 .($this->selected == $record[$this->primaryKey] ? 'selected' : '').
               '>'
