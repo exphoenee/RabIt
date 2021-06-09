@@ -9,7 +9,15 @@ class Controller {
     $html .= View::header();
     $html .= View::openBody();
     $html .= View::navbar();
+    $html .= View::openMain();
+    $html .= Self::content($page);
+    $html .= View::closeMain();
+    $html .= View::closeBody();
+    echo $html;
+  }
 
+  public static function content($page) {
+    $html = '';
     switch ($page) {
       case "home":
       default:
@@ -26,13 +34,11 @@ class Controller {
         $html .= AdvertView::home($adverts);
         break;
     }
-
-    $html .= View::closeBody();
-    echo $html;
+    return $html;
   }
 
-  public static function getPrimaryKey() {
-    return substr(Request::GetPage(), 0, -1)."_id";
+  public static function generateUserSelect($selected) {
+    return View::renderUserSelect(UserController::read(), "name", $selected);
   }
 
   public static function create($table, $data) {
@@ -63,6 +69,10 @@ class Controller {
       ->setWhere("`user_id` = ".$id);
     Database::Exec($sql);
     return Database::Result();
+  }
+
+  public static function getPrimaryKey() {
+    return substr(Request::GetPage(), 0, -1)."_id";
   }
 }
 
