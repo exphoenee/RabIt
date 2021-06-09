@@ -5,6 +5,7 @@
     private $editable;
     private $select;
     private $idKey;
+    private $colNr;
 
     public function __construct($records, $editable = false) {
       $this->records = $records;
@@ -13,6 +14,7 @@
       $this->select = false;
       $this->data = [];
       $this->header = [];
+
 
       $headerText = Mocks::headerText();
       $editor = Mocks::$editor;
@@ -24,6 +26,7 @@
       if ($this->editable) {
         $this->header = array_merge($this->header, $editor);
       }
+      $this->colNr = count($this->header);
     }
 
     public function setEditable($editable = true) {
@@ -40,20 +43,30 @@
       $records = $this->records;
       $page = Request::GetPage();
 
-      foreach ($records as &$record) {
+      foreach ($records as $key => &$record) {
         $deleteUrl = Request::MakeURL($page, "delete", $record[$this->idKey]);
-        $updateUrl = Request::MakeURL($page, "edit", $record[$this->idKey]);
+        $updateUrl = Request::MakeURL($page, "editor", $record[$this->idKey]);
 
         if ($this->editable) {
           if (Request::GetParam() != $record[$this->idKey]) {
-            $record['Edit'] = View::createLinkButton($updateUrl, "Szerkesztés");
+            $record['editor-cell'] = View::createLinkButton($updateUrl, "Szerkesztés");
           } else {
-            if (is_object($this->select)) {
-              $this->select->setId($record[$this->idKey]);
+
+            $from = $record;
+
+            foreach ($record as $col => &$cell) {
+              if ((!($col == $this->idKey))) {
+                unset($record[$col]);
+              }
             }
-            $record['Edit'] = View::renderEditorMenu($record, false, $this->select);
+
+            if (is_object($this->select)) {
+              $this->select->setNoLabel(true)->setId($record[$this->idKey]);
+            }
+
+            $record['editor-cell'] = View::renderEditorMenu($from, false, $this->select);
           }
-          $record['Delete'] = View::createLinkButton($deleteUrl, "Törlés", "delete");
+          $record['delete-cell'] = View::createLinkButton($deleteUrl, "Törlés", "delete");
         }
       }
 
@@ -65,21 +78,39 @@
       $thead = '';
       $tbody = '';
 
-      $thead .= '<tr>';
-      foreach ($this->header as $columnName) {
-
-        $thead .= '<th>'. $columnName .'</th>';
+      $thead .= '<tr id="row-header">';
+      foreach ($this->header as $key=>$columnName) {
+        $thead .=
+        '<th
+          class="column '. $key .'"
+        >'
+          . $columnName .
+        '</th>';
       }
       $thead .= '</tr>';
 
       $this->genereateCells();
 
       foreach ($this->data as $row) {
-        $tbody .= '<tr id="">';
+        $id = $row[$this->idKey];
+        $tbody .= '<tr id="row-'. $id .'">';
 
+        $thisColErr = ($this->colNr)-(count($row));
+        foreach ($row as $key => $cell) {
+          $tbody .=
+          '<td
+            id="cell-'. $key .'-'. $id .'"
+            class="column '. $key .'"';
 
-        foreach ($row as $cell) {
-          $tbody .= '<td>'. $cell .'</td>';
+          if (($thisColErr > 0) && ($key === "editor-cell")) {
+            $tbody .=
+            'colspan="'.($thisColErr+1).'"';
+          }
+
+          $tbody .=
+          '>'
+            . $cell .
+          '</td>';
         }
 
         $tbody .= '</tr">';
