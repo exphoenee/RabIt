@@ -67,15 +67,15 @@ class View {
             <input
               type="text"
               name="'. $key .'"
-              id="'. $key .'-'. $id .'"></input>'
-            .Request::AddSubmitId().
-            '</div>';
+              id="'. $key .'-'. $id .'"></input>
+          </div>';
       }
     }
 
     $html .=
+        Request::AddSubmitId().
         '<button
-          class="link-btn '.($edit ? "add" : "update").'"
+          class="link-btn '.($edit ? "new" : "update").'"
           type="submit">'
             .($edit ? "Hozzáadás" : "Frissítés" ).
         '</button>'
