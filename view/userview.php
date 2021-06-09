@@ -1,6 +1,8 @@
 <?php
 class UserView {
-
+  /*
+  * generating the User view
+  */
   public static function home($users) {
     $html = '';
     $html .='<div><h1>Felhasználók</h1>';

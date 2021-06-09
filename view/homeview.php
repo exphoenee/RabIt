@@ -1,6 +1,8 @@
 <?php
 class HomeView {
-
+  /*
+  * generating the Home view
+  */
   public static function home() {
     return
     '<div>

@@ -1,4 +1,7 @@
 <?php
+/*
+* This class renders the tables out it takes only a database table, end a boolean, according to that renders the class the editor menu as well
+*/
   class TableView {
     private $header;
     private $data;
@@ -29,16 +32,25 @@
       $this->colNr = count($this->header);
     }
 
+    /*
+    * with this method we can set the tabel editable after instantiation
+    */
     public function setEditable($editable = true) {
       $this->editable = $editable;
       return $this;
     }
 
+    /*
+    * with this method we can pass a SelectView class to render out in the cells against an input filed
+    */
     public function setSelector($select) {
       $this->select = $select;
       return $this;
     }
 
+    /*
+    * with this method generates the cells of the table
+    */
     private function genereateCells() {
       $records = $this->records;
       $page = Request::GetPage();
@@ -73,6 +85,9 @@
       $this->data = $records;
     }
 
+    /*
+    * with this method renders the HTML code of the entire table
+    */
     public function render() {
       $html = '';
       $thead = '';

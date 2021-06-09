@@ -1,4 +1,9 @@
 <?php
+
+/*
+* Added the dependencies manually
+* TODO: using namespace and autoload would be better, but this project was not so large.
+*/
   require_once 'view/mocks/mocks.php';
 
   require_once 'config.php';

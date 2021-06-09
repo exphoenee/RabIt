@@ -1,5 +1,8 @@
 <?php
-
+/*
+* Later thay also comes form database and
+* they had easing the work for me
+*/
   class Mocks {
     public static $menu =
     [

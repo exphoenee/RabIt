@@ -1,5 +1,7 @@
 <?php
-
+/*
+* This is a basic configuration class against the .env file
+*/
   class Config {
 
     /* main infos */

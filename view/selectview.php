@@ -1,4 +1,7 @@
 <?php
+/*
+* this class is responsible for the HTML select generation, and modification
+*/
 class SelectView {
   private $values;
   private $column;
@@ -17,25 +20,40 @@ class SelectView {
     $this->id = "add";
   }
 
+  /*
+  * this method can pass an id after the instantiation
+  */
   public function setId($id) {
     $this->id = $id;
     return $this;
   }
 
+  /*
+  * this method can set the value of the select (HTML attr. selected) after the instantiation
+  */
   public function setSelected($selected) {
     $this->selected = $selected;
     return $this;
   }
 
+  /*
+  * this method can set the foreign key what for is made the select HTML element
+  */
   public function getForeignKey() {
     return $this->column;
   }
 
+  /*
+  * this method can turn off the label of the select HTML element
+  */
   public function setNoLabel($noLabel) {
     $this->noLabel = $noLabel;
     return $this;
   }
 
+  /*
+  * generating the HTML code
+  */
   public function render() {
       $html = '';
 

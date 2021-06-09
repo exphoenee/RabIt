@@ -2,6 +2,9 @@
 
 class Controller {
 
+  /*
+  * This method is responsible for assembling the entire page
+  */
   public static function renderPage() {
     $page = Request::getPage();
 
@@ -16,6 +19,9 @@ class Controller {
     echo $html;
   }
 
+  /*
+  * This method renders the main content
+  */
   public static function content($page) {
     $html = '';
     switch ($page) {
@@ -37,12 +43,18 @@ class Controller {
     return $html;
   }
 
+  /*
+  * This is the core of the CREATE operation
+  */
   public static function create($table, $data) {
     $sql = Sql::Insert($table)->setFields($data);
     Database::Exec($sql);
     return Database::Result();
   }
 
+  /*
+  * This is the core of the READ operation
+  */
   public static function read($table, $id = null) {
     $sql = Sql::Select($table);
     if ($id  !== null) {
@@ -52,6 +64,9 @@ class Controller {
     return Database::Result();
   }
 
+  /*
+  * This is the core of the UPDATE operation
+  */
   public static function update($table, $id, $data) {
     $sql = Sql::Update($table)
       ->setFields($data)
@@ -60,6 +75,9 @@ class Controller {
     return Database::Result();
   }
 
+  /*
+  * This is the core of the DELETE operation (HARD DELETE)
+  */
   public static function delete($table, $id) {
     $sql = Sql::Delete($table)
       ->setWhere("`".$table."_id` = ".$id);
@@ -67,6 +85,11 @@ class Controller {
     return Database::Result();
   }
 
+  /*
+  * This is a helper that creates the primary id of table from the URL
+  * TODO: It would be nice refactoring that, that is not enough secure!!!
+  * Here would we get information form the database about the tables primary key.
+  */
   public static function getPrimaryKey() {
     return substr(Request::GetPage(), 0, -1)."_id";
   }

@@ -1,6 +1,9 @@
 <?php
 class AdvertView {
 
+  /*
+  * generating the Adveristment view
+  */
   public static function home($adverts) {
 
     $html = '';

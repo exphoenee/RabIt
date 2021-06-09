@@ -1,4 +1,12 @@
 <?php
+
+/*
+* general view things are collected here for examle:
+  * HTML head/body/openings/closings,
+  * navbar,
+  * editormenu,
+  * link buttons,
+*/
 class View {
   public static function header() {
     $html = '';

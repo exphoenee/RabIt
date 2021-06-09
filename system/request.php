@@ -1,7 +1,13 @@
 <?php
-
+/*
+* This class handling the requests
+* and the url things.
+*/
 class Request {
 
+  /*
+  * this method checks the form was already sent earlier (not used in the project)
+  */
 	public static function hasFormSent($submit) {
 		$formData = self::Post();
 		if (isset($formData[$submit])) {
@@ -10,6 +16,11 @@ class Request {
 		return false;
 	}
 
+  /*
+  * handling the GET HTTP method
+  * param argument takes out from the GET the value only key equls to prama
+  * if there is set a default then not existing GET parameters returning the default
+  */
   public static function Get($param, $default = null) {
     if (isset($_GET[$param])) {
         return urlencode($_GET[$param]);
@@ -17,6 +28,10 @@ class Request {
     return $default;
   }
 
+  /*
+  * handling the GET Post method
+  * if key is not set returns back the enire POST
+  */
   public static function Post($key = null){
   if($key !== null) {
       if (isset($_POST[$key])) {
@@ -29,6 +44,9 @@ class Request {
 		return null;
 	}
 
+  /*
+  * adding a hidden input to the form validation
+  */
 	public static function AddSubmitId() {
 		$html = '';
 		$html .=
@@ -36,6 +54,9 @@ class Request {
 		return $html;
 	}
 
+  /*
+  * Checking the submit id
+  */
 	public static function SubmitCheck()
 	{
 		if(isset($_POST['submitId']))
@@ -54,6 +75,9 @@ class Request {
 		}
 	}
 
+  /*
+  * Creating the URLs
+  */
 	public static function MakeURL($page, $action = null, $param = null) {
 		$url = Config::$base .$page;
 		if($action){ $url .= ("/". $action); }
@@ -61,8 +85,11 @@ class Request {
 
 		return $url;
 	}
-	public static function Path($index)
-	{
+
+  /*
+  * Getting out the PAGE/ACTION/PARAM form the mapped URL
+  */
+	public static function Path($index) {
 		if (self::$path === null) {
 			$request = $_SERVER['REQUEST_URI'];
 			self::$path = explode("/", $request);
@@ -74,16 +101,14 @@ class Request {
 
 		return null;
 	}
-	public static function GetPage()
-	{
+
+	public static function GetPage() {
 		return self::Path(1);
 	}
-	public static function GetAction()
-	{
+	public static function GetAction() {
 		return self::Path(2);
 	}
-	public static function GetParam()
-	{
+	public static function GetParam() {
 		return self::Path(3);
 	}
 
