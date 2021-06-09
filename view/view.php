@@ -53,19 +53,40 @@ class View {
     $page = Request::GetPage();
     $idKey = Controller::getPrimaryKey();
 
+    /*
+    * id let eqal "add" if the form is for editing purpose,
+    * if the form is an "update" for, the null it out.
+    * only if the record has a $idKey let it eqal with that id
+    * TODO: refactoing requied nobody can read this
+    */
     $id = $edit ? "add" : null;
     if (isset($data[$idKey]) && !$edit) {
       $id = $data[$idKey];
     };
 
+    /*
+    * throw away the key from the record
+    * earliery that is saved to $id variable
+    */
     unset($data[$idKey]);
 
+    /*
+    * Here starts the rendering of the form
+    */
     $html .=
     '<div class="' .($edit ? "add" : "edit"). '">
       <form action="'. Request::MakeURL($page, ($edit ? "add" : "update"), ($edit ? null : $id)) .'" method="POST">';
 
     $fieldName = Mocks::headerText();
     foreach ($data as $key => $field) {
+
+      /*
+      * if there is a select and the key is same as the foreign key of the select pass the id of the record to the select
+      * here many things depends on that fact this is an "UPDATE" or "CREAT" operation.
+      * DECISION: HTML select on Input is rendered out?
+      * TODO: refactoring theand separating UPDATE/CREATE is necessary:
+      * TODO: the HTML renderings should organized to another methods, to get more readable the code
+      */
       if (($select) && ($key == $select->getForeignKey())) {
         $html .= $select->setSelected($id)->render();
       } else {
@@ -88,6 +109,9 @@ class View {
       }
     }
 
+    /*
+    * adding sumbitId and button here
+    */
     $html .=
         Request::AddSubmitId().
         '<button
@@ -102,6 +126,9 @@ class View {
   }
 
 
+  /*
+  * LinkButton rendering method
+  */
   public static function createLinkButton($url, $text, $class = null) {
     return '<div
         class="link-btn'
@@ -113,6 +140,9 @@ class View {
         </div>';
   }
 
+  /*
+  * HOME
+  */
   public static function home() {
     return '<div>Home</div>';
   }
