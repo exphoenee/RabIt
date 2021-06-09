@@ -6,9 +6,11 @@ class SelectView {
   private $err;
   private $selected;
   private $id;
+  private $noLabel;
 
   public function __construct($values, $column, $primaryKey) {
     $this->values = $values;
+    $this->noLabel = false;
     $this->column = $column;
     $this->primaryKey = $primaryKey;
     $this->err = isset($this->values[0][$this->primaryKey]);
@@ -29,17 +31,25 @@ class SelectView {
     return $this->column;
   }
 
+  public function setNoLabel($noLabel) {
+    $this->noLabel = $noLabel;
+    return $this;
+  }
+
   public function render() {
       $html = '';
 
       if ($this->err) {
         $html .=
         '<div class="inputfiled">';
-        $html .=
-          '<label
-            for="'. $this->column."-".$this->id.'">'
-              . Mocks::$filedNames[$this->column].
-          ' </label>';
+        var_dump(!$this->noLabel);
+        if (!$this->noLabel) {
+          $html .=
+            '<label
+              for="'. $this->column."-".$this->id.'">'
+                . Mocks::$filedNames[$this->column].
+            ' </label>';
+        }
         $html .=
           '<select
             id="'. $this->column."-".$this->id.'"
