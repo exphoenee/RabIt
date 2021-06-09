@@ -25,7 +25,7 @@
       "advert_id" => "Hirdetés azonosító",
     ];
 
-    public static $editor =  ["edit" => "Szerkesztés", "delete" => "Törlés"];
+    public static $editor =  ["edit-cell" => "Szerkesztés", "delete-cell" => "Törlés"];
 
     public static $filedNames = [
       "title" => "Hirdetés címe",
