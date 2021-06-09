@@ -27,7 +27,7 @@ class AdvertController {
   }
 
   public static function read($id = null) {
-    return Controller::read("advert", $id);
+    return Controller::read("users_adverts", $id);
   }
 
   public static function update($id, $data) {
