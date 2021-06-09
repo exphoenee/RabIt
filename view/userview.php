@@ -3,7 +3,7 @@ class UserView {
 
   public static function home($users) {
     $html = '';
-    $html .='<div><h1>Falhasználók</h1>';
+    $html .='<div><h1>Felhasználók</h1>';
 
     $html .= View::renderEditorMenu($users[0], true);
     $html .= self::renderUserTable($users);
