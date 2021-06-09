@@ -28,12 +28,12 @@
       foreach ($records as &$record) {
         if ($editable) {
           if (Request::GetParam() != $record[$idKey]) {
-            $record['Edit'] = '<a href="'. Request::MakeURL(Request::GetPage(), "edit", $record[$idKey]) .'">Szerkesztés</a>';
+            $record['Edit'] = '<div class="link-btn"><a href="'. Request::MakeURL(Request::GetPage(), "edit", $record[$idKey]) .'">Szerkesztés</a></div>';
           } else {
             $record['Edit'] = View::renderEditorMenu($record);
           }
 
-          $record['Delete'] = '<a href="'. Request::MakeURL(Request::GetPage(), "delete", $record[$idKey]) .'">Törlés</a>';
+          $record['Delete'] = '<div class="link-btn"><a href="'. Request::MakeURL(Request::GetPage(), "delete", $record[$idKey]) .'">Törlés</a></div>';
         }
       }
 
