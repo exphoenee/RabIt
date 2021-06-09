@@ -25,6 +25,8 @@
       "advert_id" => "Hirdetés azonosító",
     ];
 
+    public static $editor =  ["edit" => "Szerkesztés", "delete" => "Törlés"];
+
     public static $filedNames = [
       "title" => "Hirdetés címe",
       "name" => "Felhasználó neve"
