@@ -496,11 +496,11 @@ main table th {
   padding: 8px;
 }
 main table tr {
-  background-color: #fefefe;
+  background-color: #f4f4f4;
   transition: all 0.2s ease-in-out;
 }
 main table tr:nth-child(even) {
-  background-color: #f1f1f1;
+  background-color: #d1d1d1;
 }
 main table tr:hover {
   background-color: #e3f0f5;
@@ -539,12 +539,10 @@ main .add form .inputfiled {
   flex-direction: column;
   justify-content: center;
 }
-main .add form button,
 main .add form .link-btn {
   background-color: #274472;
   color: white;
 }
-main .add form button:hover,
 main .add form .link-btn:hover {
   background-color: #61729f;
   color: #e3f0f5;
@@ -556,6 +554,7 @@ main .edit {
 main .edit form {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 0;
 }
 main .edit form .inputfiled {
@@ -564,7 +563,6 @@ main .edit form .inputfiled {
   justify-content: center;
 }
 
-button,
 .link-btn {
   max-width: 10rem;
   height: 2rem;
@@ -579,8 +577,8 @@ button,
   color: #e3f0f5;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
   margin: 0 auto;
+  transition: all 0.2s ease-in-out;
 }
-button a,
 .link-btn a {
   padding: 0 5px;
   text-align: center;
@@ -588,8 +586,24 @@ button a,
   text-decoration: none;
   color: #e3f0f5;
 }
-button:hover,
 .link-btn:hover {
   background-color: #274472;
   color: white;
+}
+
+.update {
+  border-radius: 5px 0 0 5px;
+}
+
+.cancel {
+  border-radius: 0 5px 5px 0;
+}
+
+.delete,
+.cancel {
+  background-color: darkred;
+}
+.delete:hover,
+.cancel:hover {
+  background-color: red;
 }/*# sourceMappingURL=style.css.map */
