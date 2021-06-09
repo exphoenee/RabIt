@@ -48,7 +48,7 @@
           if (Request::GetParam() != $record[$this->idKey]) {
             $record['Edit'] = View::createLinkButton($updateUrl, "Szerkesztés");
           } else {
-            if ($this->select) {
+            if (is_object($this->select)) {
               $this->select->setId($record[$this->idKey]);
             }
             $record['Edit'] = View::renderEditorMenu($record, false, $this->select);
