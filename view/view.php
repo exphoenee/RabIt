@@ -79,10 +79,22 @@ class View {
           type="submit">'
             .($edit ? "Hozzáadás" : "Frissítés" ).
         '</button>'
-        .($edit ? '' : '<div class="link-btn cancel"><a href="'. Request::MakeURL($page). '">Mégsem</a></div>').
+        .($edit ? '' : (View::createLinkButton(Request::MakeURL($page), "Mégsem", "cancel"))).
       '</form>
     </div>';
     return $html;
+  }
+
+
+  public static function createLinkButton($url, $text, $class = null) {
+    return '<div
+        class="link-btn'
+          .($class ? " ".$class : "").
+        '">
+          <a href="'. $url .'">
+            '.$text.'
+          </a>
+        </div>';
   }
 
   public static function home() {

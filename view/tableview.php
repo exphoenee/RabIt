@@ -37,21 +37,24 @@
     }
 
     private function genereateCells() {
-      foreach ($this->records as $record) {
-        var_dump($this->record);
+      $records = $this->records;
+      $id = Request::GetPage();
+
+      foreach ($records as &$record) {
+        $deleteUrl = Request::MakeURL($id, "delete", $record[$this->idKey]);
+        $updateUrl = Request::MakeURL($id, "edit", $record[$this->idKey]);
+
         if ($this->editable) {
           if (Request::GetParam() != $record[$this->idKey]) {
-            $this->data['Edit'] = '<div class="link-btn"><a href="'. Request::MakeURL(Request::GetPage(), "edit", $record[$this->idKey]) .'">Szerkesztés</a></div>';
+            $record['Edit'] = View::createLinkButton($updateUrl, "Szerkesztés");
           } else {
-            var_dump($this->select);
-            $$this->data['Edit'] = View::renderEditorMenu($record, false, $this->select);
+            $record['Edit'] = View::renderEditorMenu($record);
           }
-
-          $this->data['Delete'] = '<div class="link-btn delete"><a href="'. Request::MakeURL(Request::GetPage(), "delete", $record[$this->idKey]) .'">Törlés</a></div>';
+          $record['Delete'] = View::createLinkButton($deleteUrl, "Törlés", "delete");
         }
       }
 
-      return $this;
+      $this->data = $records;
     }
 
     public function render() {
