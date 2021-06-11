@@ -82,9 +82,9 @@ class View {
 
       /*
       * if there is a select and the key is same as the foreign key of the select pass the id of the record to the select
-      * here many things depends on that fact this is an "UPDATE" or "CREAT" operation.
-      * DECISION: HTML select on Input is rendered out?
-      * TODO: refactoring theand separating UPDATE/CREATE is necessary:
+      * here many things depends on that fact this is an "UPDATE" or "CREATE" operation.
+      * DECISION: HTML select or Input is rendered out?
+      * TODO: refactoring and separating UPDATE/CREATE is necessary:
       * TODO: the HTML renderings should organized to another methods, to get more readable the code
       */
       if (($select) && ($key == $select->getForeignKey())) {

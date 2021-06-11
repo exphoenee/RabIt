@@ -1,6 +1,7 @@
 <?php
 /*
 * This class renders the tables out it takes only a database table, end a boolean, according to that renders the class the editor menu as well
+* TODO: It would be better declaring an interface, and injecting here any class against the select, that is implementing this interface. These classas can be any input fileds. Or an associative array of these object, and with th column name of the thabe with the informations accoring to render.
 */
   class TableView {
     private $header;
@@ -34,6 +35,7 @@
 
     /*
     * with this method we can set the tabel editable after instantiation
+    * Maybe here woudl be better creating a new object against injeting that.
     */
     public function setEditable($editable = true) {
       $this->editable = $editable;
