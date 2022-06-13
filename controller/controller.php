@@ -34,7 +34,7 @@ class Controller {
         $users = UserController::read();
         $html .= UserView::home($users);
         break;
-        case "adverts":
+      case "adverts":
         AdvertController::hanldeAdverts();
         $adverts = AdvertController::read();
         $html .= AdvertView::home($adverts);
